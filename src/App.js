@@ -2,32 +2,13 @@ import React from "react";
 import "./App.css";
 import LandingPage from "./Components/LandingPage";
 import QuestionContainer from "./Components/QuestionContainer";
+import EndGame from "./Components/EndGame";
+const axios = require("axios");
 
 class App extends React.Component {
   state = {
     /// Data for 10 questions
-    question: [
-      {
-        id: 37045,
-        answer: "mint",
-        question:
-          "In the 1690s Newton was the bane of counterfeiters, introducing newly milled edges while working here",
-        value: 400,
-        airdate: "2000-03-20T12:00:00.000Z",
-        created_at: "2014-02-11T23:07:57.183Z",
-        updated_at: "2014-02-11T23:07:57.183Z",
-        category_id: 4420,
-        game_id: null,
-        invalid_count: null,
-        category: {
-          id: 4420,
-          title: "hello, newton!",
-          created_at: "2014-02-11T23:07:56.673Z",
-          updated_at: "2014-02-11T23:07:56.673Z",
-          clues_count: 5
-        }
-      }
-    ],
+    question: [],
     userScore: 0,
     gameStage: 0,
     questionCounter: 0,
@@ -43,6 +24,7 @@ class App extends React.Component {
         {this.state.gameStage === 1 && (
           <div>
             <QuestionContainer
+              questionCategory={this.state.question[0].category.title}
               question={this.state.question[0].question}
               questionValue={this.state.question[0].value}
               submitAnswer={this.submitAnswer}
@@ -52,30 +34,58 @@ class App extends React.Component {
             />
           </div>
         )}
+        {this.state.gameStage === 3 && <EndGame score={this.state.userScore} />}
       </div>
     );
   }
 
-  startGame = () => {
-    this.newQuestion();
+  startGame = async () => {
+    await this.newQuestion();
     this.startTimer();
     this.setState(oldState => {
       return { gameStage: 1 };
     });
   };
 
-  newQuestion = () => {
+  async getDataAxios() {
+    console.log("request");
+    const response = await axios.get("http://jservice.io/api/random");
+    console.log(response.data, "request");
+    return response;
+  }
+  newQuestion = async () => {
+    if (this.state.questionCounter === 10) {
+      this.setState({ gameStage: 3 });
+    }
+    const newResponse = await this.getDataAxios();
     this.setState(oldState => {
-      return { questionCounter: oldState.questionCounter + 1 };
+      return {
+        questionCounter: oldState.questionCounter + 1,
+        question: newResponse.data
+      };
     });
   };
 
   submitAnswer = userAnswer => {
     console.log(userAnswer, "<--- userAnswer");
     console.log("Submit Answer");
-    if (userAnswer === this.state.question[0].answer) {
-      this.correctAnswer();
+    if (this.state.question[0].answer.includes(" ") && userAnswer.length > 3) {
+      if (
+        this.state.question[0].answer
+          .toLowerCase()
+          .includes(userAnswer.toLowerCase())
+      ) {
+        this.correctAnswer();
+      }
+    } else {
+      if (
+        this.state.question[0].answer.toLowerCase() === userAnswer.toLowerCase()
+      ) {
+        this.correctAnswer();
+      }
     }
+
+    this.newQuestion();
   };
 
   correctAnswer = () => {
@@ -91,6 +101,7 @@ class App extends React.Component {
 
     if (this.state.timer === 0) {
       clearInterval(this.state.countdown);
+      this.setState({ gameStage: 3 });
     }
   };
 

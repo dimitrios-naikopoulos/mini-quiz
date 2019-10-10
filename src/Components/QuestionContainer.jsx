@@ -8,7 +8,8 @@ function QuestionContainer({
   questionValue,
   questionCounter,
   timer,
-  userScore
+  userScore,
+  questionCategory
 }) {
   return (
     <div>
@@ -16,6 +17,7 @@ function QuestionContainer({
       <h2>Score: {userScore}</h2>
       <Question
         question={question}
+        questionCategory={questionCategory}
         questionValue={questionValue}
         questionCounter={questionCounter}
       />
