@@ -85,7 +85,6 @@ class App extends React.Component {
   };
 
   countdown = () => {
-    console.log("I've been run");
     this.setState(oldState => {
       return { timer: oldState.timer - 1 };
     });
@@ -97,7 +96,6 @@ class App extends React.Component {
 
   startTimer() {
     if (this.state.timer > 0) {
-      console.log(this.state.timer);
       this.setState(() => {
         return { countdown: setInterval(this.countdown, 1000) };
       });
