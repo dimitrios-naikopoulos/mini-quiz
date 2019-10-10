@@ -6,10 +6,14 @@ function QuestionContainer({
   question,
   submitAnswer,
   questionValue,
-  questionCounter
+  questionCounter,
+  timer,
+  userScore
 }) {
   return (
     <div>
+      <h3>{timer}</h3>
+      <h2>Score: {userScore}</h2>
       <Question
         question={question}
         questionValue={questionValue}

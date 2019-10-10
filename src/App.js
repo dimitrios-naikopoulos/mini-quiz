@@ -30,7 +30,9 @@ class App extends React.Component {
     ],
     userScore: 0,
     gameStage: 0,
-    questionCounter: 0
+    questionCounter: 0,
+    timer: 60,
+    countdown: 0
   };
   render() {
     return (
@@ -40,12 +42,13 @@ class App extends React.Component {
         )}
         {this.state.gameStage === 1 && (
           <div>
-            <h2>Score: {this.state.userScore}</h2>
             <QuestionContainer
               question={this.state.question[0].question}
               questionValue={this.state.question[0].value}
               submitAnswer={this.submitAnswer}
               questionCounter={this.state.questionCounter}
+              timer={this.state.timer}
+              userScore={this.state.userScore}
             />
           </div>
         )}
@@ -55,6 +58,7 @@ class App extends React.Component {
 
   startGame = () => {
     this.newQuestion();
+    this.startTimer();
     this.setState(oldState => {
       return { gameStage: 1 };
     });
@@ -79,6 +83,26 @@ class App extends React.Component {
       return { userScore: oldState.userScore + oldState.question[0].value };
     });
   };
+
+  countdown = () => {
+    console.log("I've been run");
+    this.setState(oldState => {
+      return { timer: oldState.timer - 1 };
+    });
+
+    if (this.state.timer === 0) {
+      clearInterval(this.state.countdown);
+    }
+  };
+
+  startTimer() {
+    if (this.state.timer > 0) {
+      console.log(this.state.timer);
+      this.setState(() => {
+        return { countdown: setInterval(this.countdown, 1000) };
+      });
+    }
+  }
 }
 
 export default App;
