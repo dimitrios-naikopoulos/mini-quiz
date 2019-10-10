@@ -7,13 +7,13 @@ const axios = require("axios");
 
 class App extends React.Component {
   state = {
-    /// Data for 10 questions
     question: [],
     userScore: 0,
     gameStage: 0,
     questionCounter: 0,
     timer: 60,
-    countdown: 0
+    countdown: 0,
+    scoreBoard: [{ name: "Alex", score: 400 }, { name: "Mary", score: 700 }]
   };
   render() {
     return (
@@ -34,7 +34,12 @@ class App extends React.Component {
             />
           </div>
         )}
-        {this.state.gameStage === 3 && <EndGame score={this.state.userScore} />}
+        {this.state.gameStage === 3 && (
+          <EndGame
+            score={this.state.userScore}
+            scoreBoard={this.state.scoreBoard}
+          />
+        )}
       </div>
     );
   }

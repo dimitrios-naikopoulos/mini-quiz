@@ -17,7 +17,9 @@ class UserAnswer extends Component {
             name="userAnswer"
           ></input>
         </label>
-        <button type="submit">Submit Answer</button>
+        <button className="answerButton" type="submit">
+          Submit Answer
+        </button>
       </form>
     );
   }
