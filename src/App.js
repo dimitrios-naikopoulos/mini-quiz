@@ -1,10 +1,12 @@
 import React from "react";
 import "./App.css";
+import LandingPage from "./Components/LandingPage";
+import QuestionContainer from "./Components/QuestionContainer";
 
 class App extends React.Component {
   state = {
     /// Data for 10 questions
-    questions: [
+    question: [
       {
         id: 37045,
         answer: "mint",
@@ -27,22 +29,54 @@ class App extends React.Component {
       }
     ],
     userScore: 0,
-    gameStarted: false
+    gameStage: 0,
+    questionCounter: 0
   };
   render() {
-    const { quotes, randomQuoteIndex } = this.state;
     return (
       <div className="App">
-        <h1>Mini Quiz</h1>
-        <p>Answer 10 questions in 60 seconds</p>
-        <button onClick={this.startGame}> Go!</button>
+        {this.state.gameStage === 0 && (
+          <LandingPage startGame={this.startGame} />
+        )}
+        {this.state.gameStage === 1 && (
+          <div>
+            <h2>Score: {this.state.userScore}</h2>
+            <QuestionContainer
+              question={this.state.question[0].question}
+              questionValue={this.state.question[0].value}
+              submitAnswer={this.submitAnswer}
+              questionCounter={this.state.questionCounter}
+            />
+          </div>
+        )}
       </div>
     );
   }
 
   startGame = () => {
+    this.newQuestion();
     this.setState(oldState => {
-      return { gameStarted: !oldState.gameStarted };
+      return { gameStage: 1 };
+    });
+  };
+
+  newQuestion = () => {
+    this.setState(oldState => {
+      return { questionCounter: oldState.questionCounter + 1 };
+    });
+  };
+
+  submitAnswer = userAnswer => {
+    console.log(userAnswer, "<--- userAnswer");
+    console.log("Submit Answer");
+    if (userAnswer === this.state.question[0].answer) {
+      this.correctAnswer();
+    }
+  };
+
+  correctAnswer = () => {
+    this.setState(oldState => {
+      return { userScore: oldState.userScore + oldState.question[0].value };
     });
   };
 }

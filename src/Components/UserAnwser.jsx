@@ -1,0 +1,37 @@
+import React, { Component } from "react";
+
+class UserAnswer extends Component {
+  state = {
+    userAnswer: ""
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          Your answer:
+          <input
+            value={this.state.userAnswer}
+            onChange={this.handleInputChange}
+            type="text"
+            name="userAnswer"
+          ></input>
+        </label>
+        <button type="submit">Submit Answer</button>
+      </form>
+    );
+  }
+
+  handleSubmit = event => {
+    event.preventDefault();
+    const { userAnswer } = this.state;
+    this.props.submitAnswer(userAnswer);
+    this.setState({ userAnswer: "" });
+  };
+
+  handleInputChange = event => {
+    this.setState({ userAnswer: event.target.value });
+  };
+}
+
+export default UserAnswer;
