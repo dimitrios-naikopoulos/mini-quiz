@@ -13,7 +13,7 @@ class App extends React.Component {
     questionCounter: 0,
     timer: 60,
     countdown: 0,
-    scoreBoard: [{ name: "Alex", score: 400 }, { name: "Mary", score: 700 }]
+    scoreBoard: [{ name: "Mary", score: 700 }, { name: "Alex", score: 400 }]
   };
   render() {
     return (
@@ -31,6 +31,7 @@ class App extends React.Component {
               questionCounter={this.state.questionCounter}
               timer={this.state.timer}
               userScore={this.state.userScore}
+              scoreBoard={this.state.scoreBoard}
             />
           </div>
         )}
@@ -125,9 +126,18 @@ class App extends React.Component {
     this.setState(oldState => {
       let newScoreBoard = [...oldState.scoreBoard, newPlayer];
       newScoreBoard.sort((a, b) => (a.score < b.score ? 1 : -1));
+      localStorage.setItem("scoreBoard", JSON.stringify(newScoreBoard));
       return { scoreBoard: newScoreBoard };
     });
   };
+
+  componentDidMount() {
+    if (localStorage.getItem("scoreBoard")) {
+      this.setState({
+        scoreBoard: JSON.parse(localStorage.getItem("scoreBoard"))
+      });
+    }
+  }
 
   newGame = () => {
     this.setState(() => {
