@@ -38,6 +38,8 @@ class App extends React.Component {
           <EndGame
             score={this.state.userScore}
             scoreBoard={this.state.scoreBoard}
+            updateScoreBoard={this.updateScoreBoard}
+            newGame={this.newGame}
           />
         )}
       </div>
@@ -60,6 +62,7 @@ class App extends React.Component {
   }
   newQuestion = async () => {
     if (this.state.questionCounter === 10) {
+      clearInterval(this.state.countdown);
       this.setState({ gameStage: 3 });
     }
     const newResponse = await this.getDataAxios();
@@ -117,6 +120,36 @@ class App extends React.Component {
       });
     }
   }
+
+  updateScoreBoard = newPlayer => {
+    this.setState(oldState => {
+      let newScoreBoard = [...oldState.scoreBoard, newPlayer];
+      newScoreBoard.sort((a, b) => (a.score < b.score ? 1 : -1));
+      return { scoreBoard: newScoreBoard };
+    });
+  };
+
+  newGame = () => {
+    this.setState(() => {
+      let freshStart = {
+        question: [],
+        userScore: 0,
+        gameStage: 0,
+        questionCounter: 0,
+        timer: 60,
+        countdown: 0,
+        scoreBoard: [{ name: "Alex", score: 400 }, { name: "Mary", score: 700 }]
+      };
+      return {
+        question: freshStart.question,
+        userScore: freshStart.userScore,
+        gameStage: freshStart.gameStage,
+        questionCounter: freshStart.questionCounter,
+        timer: freshStart.timer,
+        countdown: freshStart.countdown
+      };
+    });
+  };
 }
 
 export default App;
