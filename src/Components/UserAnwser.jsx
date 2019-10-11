@@ -7,7 +7,11 @@ class UserAnswer extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form
+        className="form-style-6"
+        onSubmit={this.handleSubmit}
+        autoComplete="off"
+      >
         <label>
           Your answer:
           <input
@@ -17,9 +21,7 @@ class UserAnswer extends Component {
             name="userAnswer"
           ></input>
         </label>
-        <button className="answerButton" type="submit">
-          Submit Answer
-        </button>
+        <input type="button" value="Submit" />
       </form>
     );
   }
