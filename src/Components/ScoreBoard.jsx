@@ -3,13 +3,13 @@ import ScoreForBoard from "./ScoreForBoard";
 
 function ScoreBoard({ scoreBoard }) {
   return (
-    <div className="App">
+    <div>
       <h1>Score Board</h1>
       <table className="scoreboard">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Score</th>
+            <th className="scoreBoardName">Name</th>
+            <th className="scoreBoardScore">Score</th>
           </tr>
         </thead>
         <ScoreForBoard scoreBoard={scoreBoard} />

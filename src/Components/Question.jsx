@@ -8,10 +8,12 @@ function Question({
 }) {
   return (
     <div>
-      <p>Hint: {questionCategory}</p>
       <p>Question: {questionCounter}/10</p>
-      <p>{question}</p>
-      <p>Points: {questionValue}</p>
+      <h5>{question}</h5>
+      <p>Hint: {questionCategory}</p>
+      <p>
+        Points: <span className="points">{questionValue}</span>
+      </p>
     </div>
   );
 }

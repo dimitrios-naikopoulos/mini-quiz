@@ -15,15 +15,25 @@ function QuestionContainer({
 }) {
   return (
     <div>
-      <h3>{timer}</h3>
-      <h2>Score: {userScore}</h2>
+      <img
+        src="https://images.vexels.com/media/users/3/128840/isolated/preview/c091629800ce3d91d8527d32d60bc46f-stopwatch-timer-by-vexels.png"
+        alt="Timer"
+        className="timerImage"
+      />
+      <h3 className="timer">{timer}</h3>
+      <hr></hr>
+      <h2>
+        Score: <span className="points">{userScore}</span>
+      </h2>
       <LiveRanking scoreBoard={scoreBoard} score={userScore} />
+      <hr></hr>
       <Question
         question={question}
         questionCategory={questionCategory}
         questionValue={questionValue}
         questionCounter={questionCounter}
       />
+      <hr></hr>
       <UserAnswer submitAnswer={submitAnswer} />
     </div>
   );

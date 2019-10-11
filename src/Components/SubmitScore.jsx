@@ -6,17 +6,19 @@ class SubmitScore extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Your name
-            <input
-              type="text"
-              onChange={this.handleChange}
-              value={this.state.name}
-            />
-          </label>
-          <button>Submit</button>
-        </form>
+        {this.state.user.score !== 0 && (
+          <form onSubmit={this.handleSubmit} className="form-style-6">
+            <label>
+              Your name
+              <input
+                type="text"
+                onChange={this.handleChange}
+                value={this.state.name}
+              />
+            </label>
+            <button>Submit</button>
+          </form>
+        )}
       </div>
     );
   }

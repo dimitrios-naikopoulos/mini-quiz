@@ -7,7 +7,7 @@ function ScoreForBoard({ scoreBoard }) {
         return (
           <tr key={index}>
             <th>{person.name}</th>
-            <th>{person.score}</th>
+            <th className="points">{person.score}</th>
           </tr>
         );
       })}

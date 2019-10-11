@@ -36,12 +36,14 @@ class App extends React.Component {
           </div>
         )}
         {this.state.gameStage === 3 && (
-          <EndGame
-            score={this.state.userScore}
-            scoreBoard={this.state.scoreBoard}
-            updateScoreBoard={this.updateScoreBoard}
-            newGame={this.newGame}
-          />
+          <div>
+            <EndGame
+              score={this.state.userScore}
+              scoreBoard={this.state.scoreBoard}
+              updateScoreBoard={this.updateScoreBoard}
+              newGame={this.newGame}
+            />
+          </div>
         )}
       </div>
     );

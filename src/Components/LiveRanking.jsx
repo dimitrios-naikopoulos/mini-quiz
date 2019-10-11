@@ -11,7 +11,8 @@ class LiveRanking extends Component {
       <div>
         {this.state.nextUser !== "" && (
           <h5>
-            Next in Ranking: {this.state.nextUser} {this.state.nextScore}
+            Next in Ranking: {this.state.nextUser}{" "}
+            <span className="points">{this.state.nextScore}</span>
           </h5>
         )}
       </div>
@@ -25,12 +26,21 @@ class LiveRanking extends Component {
       const nextUserScoreBoard = temporaryScoreBoard.find(user => {
         return user.score > this.props.score;
       });
-      this.setState(() => {
-        return {
-          nextUser: nextUserScoreBoard.name,
-          nextScore: nextUserScoreBoard.score
-        };
-      });
+      if (!nextUserScoreBoard) {
+        this.setState(() => {
+          return {
+            nextUser: "YOU!",
+            nextScore: this.props.score
+          };
+        });
+      } else {
+        this.setState(() => {
+          return {
+            nextUser: nextUserScoreBoard.name,
+            nextScore: nextUserScoreBoard.score
+          };
+        });
+      }
     }
   }
 }
